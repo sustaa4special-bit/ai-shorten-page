@@ -68,8 +68,22 @@
     <link rel="dns-prefetch" href="https://www.highperformanceformat.com" />
   </head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+ <body>
+  <!-- Root container for Lovable / React render -->
+  <div id="root"></div>
+
+  <!-- Your existing ad script (optional, top/bottom handled in component) -->
+  <script type="text/javascript"> 
+    atOptions = {
+      'key' : '988629ac76fde4e22965d0540e5ee022',
+      'format' : 'iframe',
+      'height' : 90,
+      'width' : 728,
+      'params' : {}
+    };
+  </script>
+  <script type="text/javascript" src="//www.highperformanceformat.com/988629ac76fde4e22965d0540e5ee022/invoke.js"></script>
+
+  <!-- GitHub Pages compatible JS bundle -->
+  <script type="module" src="assets/main.js"></script>
+</body>
