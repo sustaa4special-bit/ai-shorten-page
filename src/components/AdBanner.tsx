@@ -4,6 +4,18 @@ interface AdBannerProps {
   position: "top" | "bottom";
 }
 
+declare global {
+  interface Window {
+    atOptions?: {
+      key: string;
+      format: string;
+      height: number;
+      width: number;
+      params: Record<string, unknown>;
+    };
+  }
+}
+
 const AdBanner = ({ position }: AdBannerProps) => {
   const adRef = useRef<HTMLDivElement>(null);
   const scriptLoaded = useRef(false);
@@ -14,26 +26,44 @@ const AdBanner = ({ position }: AdBannerProps) => {
     
     scriptLoaded.current = true;
 
-    // Create and inject the ad configuration
+    // Set atOptions on window object for global access
+    window.atOptions = {
+      key: '988629ac76fde4e22965d0540e5ee022',
+      format: 'iframe',
+      height: 90,
+      width: 728,
+      params: {}
+    };
+
+    // Create the configuration script element
     const configScript = document.createElement("script");
     configScript.type = "text/javascript";
-    configScript.innerHTML = `
+    configScript.text = `
       atOptions = {
-        'key' : '988629ac76fde4e22965d0540e5ee022',
-        'format' : 'iframe',
-        'height' : 90,
-        'width' : 728,
-        'params' : {}
+        'key': '988629ac76fde4e22965d0540e5ee022',
+        'format': 'iframe',
+        'height': 90,
+        'width': 728,
+        'params': {}
       };
     `;
 
-    // Create and inject the ad invocation script
+    // Create the ad invocation script element
     const invokeScript = document.createElement("script");
     invokeScript.type = "text/javascript";
     invokeScript.src = "//www.highperformanceformat.com/988629ac76fde4e22965d0540e5ee022/invoke.js";
     invokeScript.async = true;
+    
+    // Add error handling
+    invokeScript.onerror = () => {
+      console.error(`Failed to load ad script for ${position} banner`);
+    };
+    
+    invokeScript.onload = () => {
+      console.log(`Ad script loaded successfully for ${position} banner`);
+    };
 
-    // Append scripts to the ad container
+    // Append scripts to the ad container in correct order
     if (adRef.current) {
       adRef.current.appendChild(configScript);
       adRef.current.appendChild(invokeScript);
@@ -41,6 +71,9 @@ const AdBanner = ({ position }: AdBannerProps) => {
 
     return () => {
       // Cleanup on unmount
+      if (adRef.current) {
+        adRef.current.innerHTML = '';
+      }
       scriptLoaded.current = false;
     };
   }, [position]);
