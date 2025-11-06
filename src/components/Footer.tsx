@@ -24,7 +24,7 @@ const Footer = () => {
           </div>
           
           <p className="text-sm text-muted-foreground">
-            © 2025 SmartLink. All rights reserved.
+            © 2025 URL SHORTNER. All rights reserved.
           </p>
         </div>
       </div>

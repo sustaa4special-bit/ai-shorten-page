@@ -142,4 +142,25 @@ All colors MUST be HSL.
     transform: translateY(-2px);
     box-shadow: var(--shadow-glow);
   }
+  
+  /* Ad Container Styling */
+  .ad-container {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* Lazy loading images */
+  img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  img[loading="lazy"].loaded {
+    opacity: 1;
+  }
 }

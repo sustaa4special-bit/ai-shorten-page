@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Copy, Check, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import AdBanner from "./AdBanner";
 
 const HeroSection = () => {
   const [url, setUrl] = useState("");
@@ -72,11 +73,9 @@ const HeroSection = () => {
 
   return (
     <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-      {/* Ad Banner Placeholder - Top */}
-      <div className="mb-12 flex justify-center">
-        <div className="w-full max-w-3xl h-24 glass-card rounded-lg flex items-center justify-center text-muted-foreground text-sm border-2 border-dashed">
-          Ad Space (728x90)
-        </div>
+      {/* Ad Banner - Top */}
+      <div className="mb-12">
+        <AdBanner position="top" />
       </div>
 
       <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
@@ -158,11 +157,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Ad Banner Placeholder - Bottom */}
-      <div className="mt-16 flex justify-center">
-        <div className="w-full max-w-3xl h-24 glass-card rounded-lg flex items-center justify-center text-muted-foreground text-sm border-2 border-dashed">
-          Ad Space (728x90)
-        </div>
+      {/* Ad Banner - Bottom */}
+      <div className="mt-16">
+        <AdBanner position="bottom" />
       </div>
     </section>
   );

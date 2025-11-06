@@ -24,7 +24,7 @@ const FeaturesSection = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Why Choose <span className="gradient-text">SmartLink</span>?
+            Why Choose <span className="gradient-text">URL SHORTNER</span>?
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Everything you need to create, manage, and track powerful short links
