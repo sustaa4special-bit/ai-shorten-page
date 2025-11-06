@@ -3,16 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Check, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const HeroSection = () => {
   const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [shortCode, setShortCode] = useState("");
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleShorten = async () => {
     if (!url.trim()) {
       toast.error("Please enter a URL to shorten");
+      return;
+    }
+
+    // Validate URL starts with http:// or https://
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      toast.error("URL must start with http:// or https://");
       return;
     }
 
@@ -26,13 +34,33 @@ const HeroSection = () => {
 
     setIsLoading(true);
     
-    // Simulate API call - replace with real API later
-    setTimeout(() => {
-      const randomId = Math.random().toString(36).substring(2, 8);
-      setShortUrl(`https://smrt.lnk/${randomId}`);
+    try {
+      const { data, error } = await supabase.functions.invoke("shorten-url", {
+        body: { longUrl: url },
+      });
+
+      if (error) throw error;
+
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      }
+
+      setShortCode(data.shortCode);
+      setShortUrl(data.shortUrl);
+      toast.success("✅ Link shortened successfully!");
+      
+      // Auto-copy to clipboard
+      await navigator.clipboard.writeText(data.shortUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+      
+    } catch (error) {
+      console.error("Error shortening URL:", error);
+      toast.error("Failed to shorten URL. Please try again.");
+    } finally {
       setIsLoading(false);
-      toast.success("Link shortened successfully!");
-    }, 1000);
+    }
   };
 
   const handleCopy = async () => {
