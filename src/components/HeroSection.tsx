@@ -78,72 +78,79 @@ const HeroSection = () => {
         <AdBanner position="top" />
       </div>
 
-      <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-sm font-medium">
-          <Sparkles className="w-4 h-4 text-primary" />
-          <span>AI-Powered Link Shortening</span>
+      <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in relative z-10">
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 float-animation">
+          <Sparkles className="w-4 h-4 text-primary animate-pulse-glow" />
+          <span className="gradient-text">AI-Powered Link Shortening</span>
         </div>
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-          <span className="gradient-text">Shorten Your Links.</span>
-          <br />
-          <span className="text-foreground">Track Smarter.</span>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+          <span className="gradient-text block mb-2">Shorten Your Links.</span>
+          <span className="text-foreground block">Track Smarter.</span>
         </h1>
 
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
           Create fast, secure, and SEO-friendly short links with AI-powered accuracy.
-          Perfect for social media, marketing, and analytics.
+          <br className="hidden md:block" />
+          <span className="font-semibold text-primary">Perfect for social media, marketing, and analytics.</span>
         </p>
 
-        <div className="max-w-3xl mx-auto space-y-4 animate-slide-up">
-          <div className="glass-card rounded-2xl p-6 md:p-8 space-y-4 shadow-medium hover:shadow-glow transition-all duration-300">
-            <div className="flex flex-col sm:flex-row gap-3">
+        <div className="max-w-3xl mx-auto space-y-6 animate-slide-up">
+          <div className="glass-card rounded-3xl p-6 md:p-10 space-y-6 shadow-large hover:shadow-glow transition-all duration-500 border-2 border-glass-border">
+            <div className="flex flex-col sm:flex-row gap-4">
               <Input
                 type="url"
-                placeholder="Paste your long URL here..."
+                placeholder="✨ Paste your long URL here..."
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleShorten()}
-                className="flex-1 h-12 md:h-14 text-base bg-white/50 border-border/50 focus:border-primary"
+                className="flex-1 h-14 md:h-16 text-base premium-input rounded-2xl px-6 font-medium placeholder:text-muted-foreground/60"
               />
               <Button
                 onClick={handleShorten}
                 disabled={isLoading}
-                className="h-12 md:h-14 px-8 btn-gradient text-white font-semibold shadow-md hover:shadow-glow"
+                className="h-14 md:h-16 px-10 btn-gradient text-white font-bold shadow-lg rounded-2xl text-base"
               >
                 {isLoading ? (
                   <span className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" />
                     Shortening...
                   </span>
                 ) : (
-                  "Shorten Now"
+                  "Shorten Now →"
                 )}
               </Button>
             </div>
 
             {shortUrl && (
-              <div className="animate-scale-in space-y-3 pt-4 border-t border-border/50">
-                <p className="text-sm font-medium text-muted-foreground">Your shortened link:</p>
-                <div className="flex items-center gap-3 p-4 bg-white/70 rounded-xl border border-primary/20">
+              <div className="animate-scale-in space-y-4 pt-6 border-t-2 border-primary/10">
+                <p className="text-sm font-semibold text-primary flex items-center gap-2">
+                  <Check className="w-5 h-5 text-green-500" />
+                  Your shortened link is ready!
+                </p>
+                <div className="flex items-center gap-3 p-5 bg-gradient-to-r from-white/90 to-blue-50/90 rounded-2xl border-2 border-primary/30 shadow-lg">
                   <a
                     href={shortUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 text-primary font-medium hover:underline truncate"
+                    className="flex-1 text-primary font-bold hover:underline truncate text-lg"
                   >
                     {shortUrl}
                   </a>
                   <Button
-                    variant="outline"
-                    size="sm"
                     onClick={handleCopy}
-                    className="shrink-0"
+                    className="shrink-0 bg-primary hover:bg-primary/90 text-white shadow-md rounded-xl px-6 py-2 font-semibold"
                   >
                     {copied ? (
-                      <Check className="w-4 h-4 text-green-500" />
+                      <span className="flex items-center gap-2">
+                        <Check className="w-4 h-4" />
+                        Copied!
+                      </span>
                     ) : (
-                      <Copy className="w-4 h-4" />
+                      <span className="flex items-center gap-2">
+                        <Copy className="w-4 h-4" />
+                        Copy
+                      </span>
                     )}
                   </Button>
                 </div>
@@ -151,8 +158,8 @@ const HeroSection = () => {
             )}
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            No signup required • Free forever • Powered by AI
+          <p className="text-sm text-muted-foreground font-medium">
+            🚀 No signup required • 🎯 Free forever • 🤖 Powered by AI
           </p>
         </div>
       </div>
